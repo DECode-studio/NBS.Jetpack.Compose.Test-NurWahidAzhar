@@ -1,7 +1,9 @@
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -86,11 +88,14 @@ fun LapsContainer(laps: List<String>) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
+            .height(200.dp) // Fixed height for the laps container
             .border(1.dp, Color(0xFF6A0DAD), RoundedCornerShape(8.dp))
             .background(Color(0xFFF3E8FF))
             .padding(16.dp)
     ) {
-        Column {
+        Column(
+            modifier = Modifier.verticalScroll(rememberScrollState())
+        ) {
             Text(
                 text = "Laps",
                 fontWeight = FontWeight.Bold,
