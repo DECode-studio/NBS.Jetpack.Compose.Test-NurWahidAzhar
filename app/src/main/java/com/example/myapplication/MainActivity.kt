@@ -54,7 +54,7 @@ class MainActivity : ComponentActivity() {
 }
 @Composable
 fun StopwatchScreen() {
-    var time by remember { mutableStateOf("00:00:00") }
+    val time by remember { mutableStateOf("00:00:00") }
     val laps = remember { mutableStateListOf("Lap 1 : 00:00:45", "Lap 2 : 00:01:45", "Lap 3 : 00:02:45") }
 
     Column(
