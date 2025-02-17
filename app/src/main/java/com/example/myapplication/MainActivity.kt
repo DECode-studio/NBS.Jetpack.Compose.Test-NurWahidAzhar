@@ -24,62 +24,80 @@ fun StopwatchScreen() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Timer display
-        Text(
-            text = time,
-            fontSize = 48.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(bottom = 32.dp)
+        TimerDisplay(time)
+        StopwatchButtons(
+            onStart = { /* Start timer */ },
+            onReset = { /* Reset timer */ },
+            onLap = { /* Add lap */ }
         )
+        LapsContainer(laps)
+    }
+}
 
-        // Buttons
-        Row(
-            modifier = Modifier.padding(bottom = 16.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+@Composable
+fun TimerDisplay(time: String) {
+    Text(
+        text = time,
+        fontSize = 48.sp,
+        fontWeight = FontWeight.Bold,
+        modifier = Modifier.padding(bottom = 32.dp)
+    )
+}
+
+@Composable
+fun StopwatchButtons(onStart: () -> Unit, onReset: () -> Unit, onLap: () -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        Button(
+            onClick = onStart,
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6A0DAD)),
+            shape = RoundedCornerShape(50),
+            modifier = Modifier.weight(1f)
         ) {
-            Button(
-                onClick = { /* Start timer */ },
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6A0DAD)),
-                shape = RoundedCornerShape(50)
-            ) {
-                Text(text = "Start", color = Color.White)
-            }
-
-            Button(
-                onClick = { /* Reset timer */ },
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6A0DAD)),
-                shape = RoundedCornerShape(50)
-            ) {
-                Text(text = "Reset", color = Color.White)
-            }
+            Text(text = "Start", color = Color.White)
         }
 
         Button(
-            onClick = { /* Add lap */ },
+            onClick = onReset,
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6A0DAD)),
             shape = RoundedCornerShape(50),
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.weight(1f)
         ) {
-            Text(text = "Lap", color = Color.White)
+            Text(text = "Reset", color = Color.White)
         }
+    }
 
-        // Laps container
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .border(1.dp, Color(0xFF6A0DAD), RoundedCornerShape(8.dp))
-                .background(Color(0xFFF3E8FF))
-                .padding(16.dp)
-        ) {
-            Column {
-                Text(
-                    text = "Laps",
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(bottom = 8.dp)
-                )
-                laps.forEach { lap ->
-                    Text(text = lap)
-                }
+    Button(
+        onClick = onLap,
+        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6A0DAD)),
+        shape = RoundedCornerShape(50),
+        modifier = Modifier.padding(bottom = 16.dp).fillMaxWidth()
+    ) {
+        Text(text = "Lap", color = Color.White)
+    }
+}
+
+@Composable
+fun LapsContainer(laps: List<String>) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(1.dp, Color(0xFF6A0DAD), RoundedCornerShape(8.dp))
+            .background(Color(0xFFF3E8FF))
+            .padding(16.dp)
+    ) {
+        Column {
+            Text(
+                text = "Laps",
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+            laps.forEach { lap ->
+                Text(text = lap)
             }
         }
     }
